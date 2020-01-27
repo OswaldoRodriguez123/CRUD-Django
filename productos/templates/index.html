@@ -1,0 +1,54 @@
+{% extends 'app/base.html' %}
+{% block title %}Lista de Productos{% endblock %}
+
+{% block content %}
+    <div class="table-responsive">
+        {% if messages %}
+            <ul class="messages list-group mb-3">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div align="left" class="btn_crear mb-3">
+            <a href="/create" type="button" class="btn btn-primary">Crear</a>
+        </div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Glosa</th>
+                    <th>Ultimo Valor</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in object_list %}
+                    <tr>
+                        <td>{{ producto.product_code }}</td>
+                        <td>{{ producto.product_name }}</td>
+                        <td>{{ producto.product_val_ult }}</td>
+                        <td>{{ producto.product_stock }}</td>
+                        <td>
+                            <form method="POST" action="/delete/{{producto.product_id}}">
+                                {% csrf_token %}
+                                
+                                <div class="btn-group">
+                                    <a href="/update/{{producto.product_id}}" title="Editar" type="button" class="btn btn-success rounded mr-1">Editar </a>
+                                    <a href="movements/{{producto.product_id}}" title="Editar" type="button" class="btn btn-primary rounded mr-1">Ver Movimientos </a>
+                                    <a href="movements/create/{{producto.product_id}}" title="Editar" type="button" class="btn btn-primary rounded mr-1">Agregar Movimiento </a>
+                                    <button class="btn btn-danger rounded mr-1" onclick="return eliminar();" type="submit">
+                                        Eliminar
+                                    </button>  
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

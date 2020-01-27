@@ -1,0 +1,33 @@
+{% extends 'app/base.html' %}
+
+{# Widget Tweaks #}
+{% load widget_tweaks  %}
+
+{% block title %}Crear Producto{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        <ul class="messages list-group mb-3">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="p-5">
+        <div class="formulario" align="left">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nombre" class="txt_negrita">Codigo</label>
+                    {{ form.product_code|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    <label for="precio" class="txt_negrita">Glosa</label>
+                    {{ form.product_name|add_class:"form-control" }}
+                </div>
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+                <a href="/" type="submit" class="btn btn-primary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
